@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alcove Realty — Creative Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e10;
+    --surface: #18181b;
+    --line: #2a2a2f;
+    --text: #f4f4f5;
+    --muted: #a1a1aa;
+    --accent: #e8b86d;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding-inline: 20px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(14,14,16,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 16px; }
+  .brand { font-family: "Fraunces", Georgia, serif; font-size: 1.4rem; font-weight: 600; text-decoration: none; }
+  .brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 24px; font-size: .95rem; }
+  .nav-links a { text-decoration: none; color: var(--muted); }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Hero */
+  .hero { padding-block: 96px 64px; }
+  .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .18em; font-size: .8rem; font-weight: 600; }
+  .hero h1 {
+    font-family: "Fraunces", Georgia, serif; font-weight: 400;
+    font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.05;
+    margin: 12px 0 20px; max-width: 14ch;
+  }
+  .hero p { color: var(--muted); max-width: 56ch; font-size: 1.1rem; margin: 0; }
+  .stats { display: flex; flex-wrap: wrap; gap: 40px; margin-top: 40px; }
+  .stats b { display: block; font-family: "Fraunces", Georgia, serif; font-size: 2rem; font-weight: 600; }
+  .stats small { color: var(--muted); }
+
+  /* Filters */
+  .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .filters button {
+    background: transparent; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 18px; font: inherit; font-size: .9rem; cursor: pointer;
+  }
+  .filters button:hover { color: var(--text); border-color: var(--muted); }
+  .filters button.active { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 600; }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    position: relative; overflow: hidden; cursor: pointer;
+    border-radius: var(--radius); background: var(--surface);
+    border: 1px solid var(--line);
+    aspect-ratio: 4 / 5;
+  }
+  .card.wide { aspect-ratio: 16 / 9; grid-column: span 2; }
+  .card.tall { aspect-ratio: 9 / 16; }
+  @media (max-width: 640px) { .card.wide { grid-column: span 1; } }
+  .card img, .card video, .card .ph {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: transform .5s ease;
+  }
+  .card:hover img, .card:hover video, .card:hover .ph { transform: scale(1.04); }
+  .ph { display: grid; place-items: center; color: rgba(255,255,255,.55); font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; }
+  .card .info {
+    position: absolute; inset: auto 0 0 0; padding: 18px;
+    background: linear-gradient(transparent, rgba(0,0,0,.85));
+  }
+  .card .info h3 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+  .card .info p { margin: 2px 0 0; color: #d4d4d8; font-size: .85rem; }
+  .badge {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(0,0,0,.6); border: 1px solid rgba(255,255,255,.15);
+    padding: 4px 10px; border-radius: 999px; font-size: .75rem; font-weight: 500;
+  }
+  .play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(255,255,255,.92); display: grid; place-items: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,.4);
+  }
+  .play::after { content: ""; margin-left: 5px; border-left: 18px solid #111; border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+
+  section { padding-block: 56px; }
+  h2.section-title { font-family: "Fraunces", Georgia, serif; font-weight: 400; font-size: 2.2rem; margin: 0 0 24px; }
+
+  /* About / contact */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; border-top: 1px solid var(--line); }
+  @media (max-width: 760px) { .about { grid-template-columns: 1fr; } .nav-links { display: none; } }
+  .about p { color: var(--muted); }
+  .services { list-style: none; padding: 0; margin: 0; }
+  .services li { padding: 14px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; }
+  .services li span { color: var(--muted); }
+  .contact { text-align: center; border-top: 1px solid var(--line); }
+  .contact h2 { font-family: "Fraunces", Georgia, serif; font-weight: 400; font-size: clamp(2rem, 5vw, 3.4rem); margin: 0 0 16px; }
+  .btn {
+    display: inline-block; margin-top: 20px; padding: 14px 28px; border-radius: 999px;
+    background: var(--accent); color: #111; font-weight: 600; text-decoration: none;
+  }
+  .contact-details { color: var(--muted); margin-top: 20px; }
+  footer { border-top: 1px solid var(--line); padding-block: 28px; color: var(--muted); font-size: .85rem; text-align: center; }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 50; background: rgba(0,0,0,.92);
+    display: grid; place-items: center; padding: 20px;
+  }
+  .lightbox[hidden] { display: none; }
+  .lb-content { max-width: min(1100px, 100%); width: 100%; text-align: center; }
+  .lb-content img, .lb-content video { max-width: 100%; max-height: 80vh; border-radius: 10px; }
+  .lb-content iframe { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: 10px; }
+  .lb-content .ph-big { aspect-ratio: 16/9; border-radius: 10px; display: grid; place-items: center; color: rgba(255,255,255,.6); }
+  .lb-caption { margin-top: 14px; }
+  .lb-caption p { color: var(--muted); margin: 4px 0 0; }
+  .lb-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: 0;
+    color: #fff; font-size: 2.2rem; cursor: pointer; line-height: 1;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">Alcove Realty<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">Creative &amp; Video Portfolio</div>
+    <h1>Stories that make spaces feel like home.</h1>
+    <p>Festive campaigns, outdoor hoardings, films, reels, AI visuals and comics for Alcove Realty and New Kolkata Triveni — designed and produced in-house.</p>
+    <div class="stats">
+      <div><b id="statCreatives">0</b><small>Creatives</small></div>
+      <div><b id="statVideos">0</b><small>Videos</small></div>
+      <div><b>2026</b><small>Latest work</small></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2 class="section-title">Selected work</h2>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="about" class="about">
+    <div>
+      <h2 class="section-title">About</h2>
+      <p>We create visual content for real estate and lifestyle brands — from scroll-stopping social creatives to cinematic walkthrough films. Every piece is built to sell the feeling of a space, not just its square footage.</p>
+    </div>
+    <ul class="services">
+      <li>Social media creatives <span>Static · Carousel</span></li>
+      <li>Reels &amp; short-form video <span>9:16</span></li>
+      <li>Property walkthrough films <span>16:9</span></li>
+      <li>Brand &amp; campaign design <span>Print · Digital</span></li>
+      <li>AI-assisted visuals <span>Concept · Render</span></li>
+    </ul>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Let's create something.</h2>
+    <p class="contact-details">bnc2@alcoverealty.in</p>
+    <a class="btn" href="mailto:bnc2@alcoverealty.in">Get in touch</a>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> Alcove Realty. All rights reserved.</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <div class="lb-content" id="lbContent"></div>
+</div>
+
+<script>
+/* ============================================================
+   EDIT YOUR PORTFOLIO HERE
+   ------------------------------------------------------------
+   Put your files in the "creatives" and "videos" folders next
+   to this index.html, then add one line per item below.
+
+   type:     "image" | "video" | "youtube"
+   src:      file path ("creatives/ad1.jpg", "videos/reel1.mp4")
+             or for youtube: the video ID (the part after v=)
+   poster:   (optional, videos) thumbnail image path
+   category: any label — filter buttons are created automatically
+   shape:    "square" (default 4:5) | "wide" (16:9) | "tall" (9:16)
+
+   Items with no src show a placeholder tile.
+   ============================================================ */
+const ITEMS = [
+  // Films & reels
+  { type: "video", title: "AI Property Film", category: "Films & Reels", src: "videos/ai-property-film.mp4", shape: "wide" },
+  { type: "video", title: "Ashchi — Ma Ashchen (Sangam)", category: "Durga Puja 2026", src: "videos/ashchi-sangam-ma-ashchen.mp4", shape: "tall" },
+  { type: "video", title: "Ekdin Ekhane — 35s Film", category: "Films & Reels", src: "videos/ekdin-ekhane-35s.mp4", shape: "tall" },
+  { type: "video", title: "New Kolkata — 9 Creatives in Motion", category: "Films & Reels", src: "videos/new-kolkata-creatives.mp4" },
+
+  // Durga Puja 2026
+  { type: "image", title: "Mahalaya — Key Visual", category: "Durga Puja 2026", src: "creatives/mahalaya-key-visual.jpg" },
+  { type: "image", title: "Trina Saha Live — Gold Stage", category: "Durga Puja 2026", src: "creatives/mahalaya-trina-gold-stage.jpg" },
+  { type: "image", title: "Trina Saha Live — Kaash at Dusk", category: "Durga Puja 2026", src: "creatives/mahalaya-trina-kaash-at-dusk.jpg" },
+  { type: "image", title: "Trina Saha Live — Laal Paar", category: "Durga Puja 2026", src: "creatives/mahalaya-trina-laal-paar.jpg" },
+  { type: "image", title: "Trina Saha Live — Trinayan", category: "Durga Puja 2026", src: "creatives/mahalaya-trina-trinayan.jpg" },
+  { type: "image", title: "Navami Soul Connection — Gold Stage", category: "Durga Puja 2026", src: "creatives/navami-gold-stage.jpg" },
+  { type: "image", title: "Navami Soul Connection — Kaash at Dusk", category: "Durga Puja 2026", src: "creatives/navami-kaash-at-dusk.jpg" },
+  { type: "image", title: "Navami Soul Connection — Laal Paar", category: "Durga Puja 2026", src: "creatives/navami-laal-paar.jpg" },
+  { type: "image", title: "Navami Soul Connection — Trinayan", category: "Durga Puja 2026", src: "creatives/navami-trinayan.jpg" },
+  { type: "image", title: "Uma Ashchen — Srijani's Collection", category: "Durga Puja 2026", src: "creatives/uma-ashchen.jpg" },
+  { type: "image", title: "Srijani's Collection — Exhibition Post", category: "Durga Puja 2026", src: "creatives/exhibition.jpg" },
+
+  // Outdoor & print
+  { type: "image", title: "Hoarding — Rashbehari Crossing", category: "Outdoor & Print", src: "creatives/ooh-rashbehari.jpg", shape: "wide" },
+  { type: "image", title: "Hoarding — Ultadanga Crossing", category: "Outdoor & Print", src: "creatives/ooh-ultadanga.jpg", shape: "wide" },
+  { type: "image", title: "Hoarding — Ballygunge Phari", category: "Outdoor & Print", src: "creatives/ooh-ballygunge-phari.jpg", shape: "wide" },
+  { type: "image", title: "Hoarding — Bartman Bhawan", category: "Outdoor & Print", src: "creatives/ooh-bartman-bhawan.jpg", shape: "wide" },
+  { type: "image", title: "Hoarding — South City", category: "Outdoor & Print", src: "creatives/ooh-south-city.jpg" },
+  { type: "image", title: "Standee 3ft × 5ft", category: "Outdoor & Print", src: "creatives/standee.jpg", shape: "tall" },
+  { type: "image", title: "Thank-You Card (A6)", category: "Outdoor & Print", src: "creatives/thank-you-card.jpg" },
+  { type: "image", title: "Courtyard — Real People", category: "Outdoor & Print", src: "creatives/courtyard-real-people.jpg", shape: "tall" },
+
+  // Social & festive
+  { type: "image", title: "Ganesh Chaturthi Wish", category: "Social & Festive", src: "creatives/ganesh-chaturthi.jpg", shape: "tall" },
+  { type: "image", title: "Independence Day", category: "Social & Festive", src: "creatives/independence-day.jpg", shape: "wide" },
+  { type: "image", title: "Director's Desk — Rath Yatra", category: "Social & Festive", src: "creatives/directors-desk-rath-yatra.jpg" },
+  { type: "image", title: "Director's Desk — Father's Day", category: "Social & Festive", src: "creatives/directors-desk-fathers-day.jpg" },
+  { type: "image", title: "Director's Desk — Cha", category: "Social & Festive", src: "creatives/directors-desk-cha.jpg" },
+
+  // AI visuals
+  { type: "image", title: "Documentary Series — Shot 1", category: "AI Visuals", src: "creatives/ai-shot-1.jpg", shape: "tall" },
+  { type: "image", title: "Documentary Series — Shot 2", category: "AI Visuals", src: "creatives/ai-shot-2.jpg", shape: "tall" },
+  { type: "image", title: "Documentary Series — Shot 3", category: "AI Visuals", src: "creatives/ai-shot-3.jpg", shape: "tall" },
+  { type: "image", title: "Documentary Series — Shot 4", category: "AI Visuals", src: "creatives/ai-shot-4.jpg", shape: "tall" },
+  { type: "image", title: "Documentary Series — Shot 5", category: "AI Visuals", src: "creatives/ai-shot-5.jpg", shape: "tall" },
+  { type: "image", title: "Documentary Series — The Refusal", category: "AI Visuals", src: "creatives/ai-shot-6-the-refusal.jpg", shape: "tall" },
+
+  // Drone & site
+  { type: "image", title: "Triveni — Towers from the Ghat", category: "Drone & Site", src: "creatives/visual-spine-towers.jpg", shape: "tall" },
+  { type: "image", title: "Triveni — Spine Landscape", category: "Drone & Site", src: "creatives/visual-spine-landscape.jpg", shape: "tall" },
+  { type: "image", title: "Clubhouse & Ghat", category: "Drone & Site", src: "creatives/visual-clubhouse-ghat.jpg", shape: "tall" },
+  { type: "image", title: "Play Deck from Above", category: "Drone & Site", src: "creatives/visual-playdeck.jpg", shape: "tall" },
+  { type: "image", title: "Amphitheatre Lawn", category: "Drone & Site", src: "creatives/visual-amphitheatre-lawn.jpg", shape: "tall" },
+
+  // Comics & illustration
+  { type: "video", title: "Para Normal — Flipbook", category: "Comics & Illustration", src: "videos/para-normal-flipbook.mp4" },
+  { type: "video", title: "Para Normal — Title", category: "Comics & Illustration", src: "videos/para-normal-title.mp4" },
+  { type: "video", title: "Gamcha League — Comic Flipbook", category: "Comics & Illustration", src: "videos/gamcha-league-flipbook.mp4" },
+  { type: "image", title: "Comic Character Line-up", category: "Comics & Illustration", src: "creatives/comic-character-lineup.jpg", shape: "wide" },
+  { type: "image", title: "Comic Cover — Pop Pyramid", category: "Comics & Illustration", src: "creatives/comic-cover-pyramid.jpg" },
+  { type: "image", title: "Comic Cover — Pop 3D", category: "Comics & Illustration", src: "creatives/comic-cover-pop3d.jpg" },
+];
+
+/* ---------- no need to edit below this line ---------- */
+const PALETTE = [
+  ["#3b2f63", "#c06c84"], ["#1f4e5f", "#79a8a9"], ["#5c3d2e", "#e8b86d"],
+  ["#2d3a4a", "#6b8cae"], ["#4a2c40", "#d98880"], ["#203a43", "#2c5364"],
+];
+const grid = document.getElementById("grid");
+const filtersEl = document.getElementById("filters");
+const lightbox = document.getElementById("lightbox");
+const lbContent = document.getElementById("lbContent");
+
+const isVideo = it => it.type === "video" || it.type === "youtube";
+document.getElementById("statCreatives").textContent = ITEMS.filter(i => !isVideo(i)).length;
+document.getElementById("statVideos").textContent = ITEMS.filter(isVideo).length;
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function placeholder(i, cls = "ph") {
+  const [a, b] = PALETTE[i % PALETTE.length];
+  return `<div class="${cls}" style="background:linear-gradient(135deg,${a},${b})">Add your file</div>`;
+}
+
+function thumb(it, i) {
+  if (!it.src) return placeholder(i);
+  if (it.type === "image") return `<img src="${esc(it.src)}" alt="${esc(it.title)}" loading="lazy">`;
+  if (it.type === "youtube") return `<img src="https://img.youtube.com/vi/${esc(it.src)}/hqdefault.jpg" alt="${esc(it.title)}" loading="lazy">`;
+  if (it.poster) return `<img src="${esc(it.poster)}" alt="${esc(it.title)}" loading="lazy">`;
+  return `<video src="${esc(it.src)}#t=0.5" muted playsinline preload="metadata"></video>`;
+}
+
+function render(filter) {
+  grid.innerHTML = ITEMS.map((it, i) => {
+    if (filter === "Videos" ? !isVideo(it) : filter !== "All" && it.category !== filter) return "";
+    const shape = it.shape === "wide" || it.shape === "tall" ? it.shape : "";
+    return `<div class="card ${shape}" data-i="${i}" tabindex="0">
+      ${thumb(it, i)}
+      <div class="badge">${isVideo(it) ? "Video" : "Creative"}</div>
+      ${isVideo(it) ? '<div class="play"></div>' : ""}
+      <div class="info"><h3>${esc(it.title)}</h3><p>${esc(it.category)}</p></div>
+    </div>`;
+  }).join("");
+}
+
+const categories = ["All", "Videos", ...new Set(ITEMS.map(i => i.category))];
+filtersEl.innerHTML = categories.map((c, i) => `<button class="${i ? "" : "active"}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+filtersEl.addEventListener("click", e => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  filtersEl.querySelectorAll("button").forEach(b => b.classList.toggle("active", b === btn));
+  render(btn.dataset.cat);
+});
+
+function open(i) {
+  const it = ITEMS[i];
+  let media;
+  if (!it.src) media = placeholder(i, "ph-big");
+  else if (it.type === "image") media = `<img src="${esc(it.src)}" alt="${esc(it.title)}">`;
+  else if (it.type === "youtube") media = `<iframe src="https://www.youtube.com/embed/${esc(it.src)}?autoplay=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>`;
+  else media = `<video src="${esc(it.src)}" controls autoplay playsinline></video>`;
+  lbContent.innerHTML = `${media}<div class="lb-caption"><strong>${esc(it.title)}</strong><p>${esc(it.category)}</p></div>`;
+  lightbox.hidden = false;
+}
+function close() { lightbox.hidden = true; lbContent.innerHTML = ""; }
+
+grid.addEventListener("click", e => { const c = e.target.closest(".card"); if (c) open(+c.dataset.i); });
+grid.addEventListener("keydown", e => { const c = e.target.closest(".card"); if (c && e.key === "Enter") open(+c.dataset.i); });
+document.getElementById("lbClose").addEventListener("click", close);
+lightbox.addEventListener("click", e => { if (e.target === lightbox) close(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+
+render("All");
+</script>
+</body>
+</html>
