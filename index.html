@@ -398,7 +398,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
 /* ---------- login ----------
    To change the password, put the SHA-256 hash of the new one here
    (PowerShell: Get-FileHash -Algorithm SHA256 -InputStream ([IO.MemoryStream]::new([Text.Encoding]::UTF8.GetBytes("NewPassword"))) ). */
-const PASSWORD_HASH = "7b444e10d9e3df4193991e45eca6afc01956b5295c02b1a7f832d2289339dc12";
+const PASSWORD_HASH = "d3f0c3bcac4ff36d52c861b464700b0b9dd22573756f764260df9cf696ace701";
 const SESSION_KEY = "alcove-portfolio-auth";
 
 async function sha256(text) {
